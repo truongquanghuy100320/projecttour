@@ -1,0 +1,58 @@
+﻿@model IEnumerable<projecttour.Models.CategoryTour>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="CategoryTours" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+            <span class="breadcrumb-item active">Danh sách danh muc chuyen du lich</span>
+        </nav>
+    </div>
+</div>
+
+<div class="row m-b-30">
+    <div class="col-lg-8">
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="CategoryTours" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span>Thêm mới</span></a>
+    </div>
+    <div class="col-lg-4 ">
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Category Tour Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+
+                    <tr>
+                        <th scope="row">@item.CategoryTourName</th>
+
+                        <td>
+                            <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="CategoryTours" asp-action="Details" asp-route-id="@item.CategoryTourId">View</a>
+                            <a class="btn btn-secondary btn-tone m-r-5" asp-area="Admin" asp-controller="CategoryTours" asp-action="Edit" asp-route-id="@item.CategoryTourId">Edit</a>
+                            <a class="btn btn-success btn-tone m-r-5" asp-area="Admin" asp-controller="CategoryTours" asp-action="Delete" asp-route-id="@item.CategoryTourId">Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

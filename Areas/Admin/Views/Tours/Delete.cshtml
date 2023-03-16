@@ -1,0 +1,93 @@
+﻿@model projecttour.Models.Tour
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+            <a asp-area="Admin" asp-controller="Tours" asp-action="Index" class="breadcrumb-item">Danh sách sản phẩm</a>
+            <span class="breadcrumb-item active">Thông tin sản phẩm : @Model.Title</span>
+        </nav>
+    </div>
+</div>
+
+<div class="card-body">
+    <h4 class="card-title">Thông tin sản phẩm : @Model.Title</h4>
+    <div class="table-responsive">
+        <table class="product-info-table m-t-20">
+            <tbody>
+                <tr>
+                    <td>ID:</td>
+                    <td class="text-dark font-weight-semibold">@Model.TourId</td>
+                </tr>
+                <tr>
+                    <td>ID:</td>
+                    <td class="text-dark font-weight-semibold">@Model.CategoryTourId</td>
+                </tr>
+                <tr>
+                    <td>DepartureDate:</td>
+                    <td>@Model.DepartureDate</td>
+                </tr>
+                <tr>
+                    <td>Tranfer:</td>
+                    <td>@Model.Tranfer</td>
+                </tr>
+                <tr>
+                    <td>Hotel</td>
+                    <td>@Model.Hotel</td>
+                </tr>
+                <tr>
+                    <td>EmptySeat:</td>
+                    <td>@Model.EmptySeat</td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        @Model.Status
+                    </td>
+                </tr>
+             
+                <tr>
+                    <td>CategoryName</td>
+                    <td>@Model.CategoryTourName</td>
+                </tr>
+                <tr>
+                    <td>PointOfDeparture:</td>
+                    <td>@Model.PointOfDeparture</td>
+                </tr>
+                <tr>
+                    <td>TourType</td>
+                    <td>@Model.TourType</td>
+                </tr>
+                <tr>
+                    <td>Tiêu đề:</td>
+                    <td>@Model.Title</td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>@Model.Description</td>
+                </tr>
+                <tr>
+                    <td>Images:</td>
+                    <td>
+                        <img width="200" height="200" src="~/images/tours/@Model.Image" alt="@Model.Title" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Xác nhận xóa:</td>
+                    <td>
+                        <form asp-controller="Tours" asp-action="Delete" asp-route-id="@Model.TourId">
+                            <input type="hidden" asp-for="TourId" />
+                            <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

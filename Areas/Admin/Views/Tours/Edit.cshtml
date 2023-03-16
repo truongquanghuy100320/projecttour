@@ -1,0 +1,170 @@
+﻿@model projecttour.Models.Tour
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-controller="Tours" asp-action="Index">Danh sách tour du lich</a>
+            <span class="breadcrumb-item active">Chỉnh sửa tour du lịch</span>
+        </nav>
+    </div>
+</div>
+
+
+
+<form asp-controller="Tours" asp-action="Edit" asp-route-id="@Model.TourId" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="TourId" />
+    <input type="hidden" asp-for="Image" />
+    <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+            <div class="m-b-15">
+                <button class="btn btn-primary">
+                    <i class="anticon anticon-save"></i>
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-edit-basic">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="productName">Title</label>
+                        <input type="text" class="form-control" asp-for="Title">
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="ShortDesc">Duration</label>
+                        <input type="text" class="form-control" asp-for="Duration">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="productPrice">Giá bán</label>
+                            <input type="text" class="form-control" asp-for="Price">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="productPrice">DepartureDate</label>
+                            <input type="date" class="form-control" asp-for="DepartureDate">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="productPrice">Tranfer</label>
+                            <input type="text" class="form-control" asp-for="Tranfer">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="productPrice">Hotel</label>
+                            <input type="date" class="form-control" asp-for="Hotel">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="productPrice">EmptySeat</label>
+                            <input type="text" class="form-control" asp-for="EmptySeat">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-semibold" for="productPrice">PointOfDeparture</label>
+                            <input type="date" class="form-control" asp-for="PointOfDeparture">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="CategoryTourId">Danh mục:</label>
+                            <select class="custom-select" id="CategoryTourId" name="CategoryTourId" asp-for="CategoryTourId" asp-items="@ViewBag.CategoryTourList" style="min-width: 200px;">
+                                <option value="">Chọn danh mục</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="CategoryTourName">Category Tour Name</label>
+                            <input type="text" class="form-control" asp-for="CategoryTourName" id="CategoryTourName" readonly>
+                        </div>
+
+
+                        @section Scripts {
+                            <script>
+                                $(document).ready(function () {
+                                    // Lấy danh sách các danh mục
+                                    var categories = @Html.Raw(Json.Serialize(ViewBag.CategoryTourList));
+
+                                    // Gán sự kiện cho dropdownlist khi chọn danh mục
+                                    $('#CategoryTourId').change(function () {
+                                        var categoryId = $(this).val();
+                                        var categoryName = '';
+
+                                        // Tìm tên danh mục tương ứng với danh mục được chọn
+                                        categories.forEach(function (category) {
+                                            if (category.value == categoryId) {
+                                                categoryName = category.text;
+                                                return false;
+                                            }
+                                        });
+
+                                        // Gán tên danh mục cho textbox
+                                        $('#CategoryTourName').val(categoryName);
+                                    });
+                                });
+                            </script>
+                            <script>
+                                function previewImage(input) {
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+                                        reader.onload = function (e) {
+                                            $('#imagePreview').attr('src', e.target.result).show();
+                                        }
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+                            </script>
+
+
+
+
+
+
+
+                        }
+
+
+
+                        </div>
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="productBrand">Ảnh đại diện</label>
+                        <input name="fImage" type="file" class="form-control-file" asp-for="Image" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="product-edit-description">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-body">
+                        <textarea class="" asp-for="Description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

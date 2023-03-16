@@ -1,0 +1,208 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<projecttour.Models.Tour>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
+
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+        .tour-time {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+            .tour-time > div {
+                flex-basis: 50%;
+            }
+
+                .tour-time > div:first-child {
+                    display: flex;
+                    align-items: center;
+                }
+
+                    .tour-time > div:first-child > div {
+                        margin-right: 10px;
+                    }
+
+        .tour-price {
+            text-align: right;
+        }
+        .gray-bg {
+             background-color: #f2f2f2;
+
+    }
+
+    .home-collection-title {
+        display: flex;
+        align-items: center;
+        background-color: #006400;
+        height: 40px;
+        padding: 0 20px;
+    }
+
+        .home-collection-title h3 {
+            margin: 0;
+            color: white;
+        }
+
+</style>
+
+<main class="main-content">
+    <div class="breadcrumb-area breadcrumb-height" data-bg-image="~/assets/images/breadcrumb/bg/1-1-1920x373.jpg">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h1 class="breadcrumb-heading">Các chuyến du lịch</h1>
+                        <ul>
+                            <li>
+                                <a href="index.html">Home <i class="pe-7s-angle-right"></i></a>
+                            </li>
+                            <li>Danh sách các chuyến du lịch</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shop-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12 order-1">
+                    <div class="tab-content text-charcoal pt-8">
+                        <div class="tab-pane fade show active" id="grid-view" role="tabpanel" aria-labelledby="grid-view-tab">
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                var groupedTours = Model.OrderBy(t => t.CategoryTourId).GroupBy(t => t.CategoryTourName);
+                                foreach (var group in groupedTours)
+                                {
+                                    var categoryTourName = group.Key;
+                                    var count = 0;
+
+                                    <div class="home-collection-title" style="display: flex; align-items: center; background-color: #006400; color: white; height: 40px; padding: 0 20px;">
+                                        <span class="collection-ico"><img src="~/images/tours/hand-left.png" style="vertical-align: baseline;"></span>
+                                        <h3 class="collection-title-text">@categoryTourName<small></small></h3>
+                                        <div style="margin-left: auto;">
+                                            <a href="@Url" style="color: white; text-decoration: none;"><i class="fa fa-angle-double-right" style="color: white"></i> Xem thêm &nbsp;</a>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        @foreach (var item in group)
+                                        {
+                                            count++;
+                                            <div class="col-xs-12 col-sm-4 product-one">
+                                                <div class="tour-box rounded">
+                                                    <br>
+                                                    <div class="tour-image">
+                                                        <div style="position: relative;">
+                                                            <a href="@Url" title="@item.Title">
+                                                                <img src="~/images/tours/@item.Image" width="500px" height="300px">
+                                                                <img src="~/images/tours/sale.png" width="160px" height="120px" style="float: left; position: absolute; top: 0; left: 0;">
+                                                                <li class="hap-dan" style="position: absolute; top: 0; right: 0; background-color: yellow; padding: 5px; list-style-type: none;">@item.PointOfDeparture</li>
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-add-action">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="cart.html">
+                                                                        <i class="pe-7s-cart"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="compare.html">
+                                                                        <i class="pe-7s-shuffle"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="wishlist.html">
+                                                                        <i class="pe-7s-like"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tour-content">
+                                                        <a href="@Url" title="@item.Title">
+                                                            <div class="tour-title gray-bg">&nbsp;&nbsp;&nbsp;@item.Title</div>
+                                                        </a>
+                                                        <div class="duration-and-details gray-bg">
+                                                            <div class="tour-time">
+                                                                <div>&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o"></i>&nbsp;@item.Duration</div>
+                                                                <div class="tour-price">@string.Format("{0:#,##0} đ", item.Price) &nbsp;</div>
+                                                            </div>
+                                                            <div class="tour-2">
+                                                                <div>&nbsp;&nbsp;&nbsp;<i class="fa fa-calendar"></i> 23/03/2023</div>
+                                                                <div>&nbsp;&nbsp;&nbsp;<i class="fa fa-plane"></i> Bay khứ hồi</div>
+                                                            </div>
+                                                            <div class="tour-time">
+                                                                <div>&nbsp;&nbsp;&nbsp;<i class="fa fa-building"></i> 2 sao</div>
+                                                                <a href="@Url"><i class="fa fa-angle-double-right"></i> Xem thêm &nbsp;</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if (count % 3 == 0)
+                                            {
+                                                <div class="clearfix"></div>
+                                            }
+                                        }
+                                    </div>
+                                }
+
+
+                            }
+
+
+                        </div>
+                        <br />
+                        <div class="pagination-container">
+                            <p class="pagination-info">Page @Model.PageNumber of @Model.PageCount, showing @Model.TotalItemCount items</p>
+                            <ul class="pagination">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li class="page-item"><a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" class="page-link">&laquo; Previous</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item disabled"><span class="page-link">&laquo; Previous</span></li>
+                                }
+
+                                @for (int i = 1; i <= Model.PageCount; i++)
+                                {
+                                    if (i == Model.PageNumber)
+                                    {
+                                        <li class="page-item active"><span class="page-link">@i</span></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a href="@Url.Action("Index", new { page = i })" class="page-link">@i</a></li>
+                                    }
+                                }
+
+                                @if (Model.HasNextPage)
+                                {
+                                    <li class="page-item"><a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" class="page-link">Next &raquo;</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
+                                }
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+@section Scripts{
+}

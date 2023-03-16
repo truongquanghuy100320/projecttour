@@ -1,0 +1,171 @@
+﻿@model projecttour.Models.Tour
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+<form asp-action="Create" asp-controller="Tours" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="page-header no-gutters has-tab">
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-edit-basic">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="Title">Title</label>
+                        <input type="text" class="form-control" asp-for="Title">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="Duration">Duration</label>
+                            <input type="text" class="form-control" asp-for="Duration">
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="DepartureDate" class="control-label"></label>
+                            <input asp-for="DepartureDate" class="form-control" />
+                            <span asp-validation-for="DepartureDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="Tranfer">Tranfer</label>
+                            <input type="text" class="form-control" asp-for="Tranfer">
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="Hotel">Hotel</label>
+                            <input type="text" class="form-control" asp-for="Hotel">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="EmptySeat">EmptySeat</label>
+                            <input type="text" class="form-control" asp-for="EmptySeat">
+                        </div>
+                        <div class="form-group col-6">
+
+                            <label class="font-weight-semibold" for="PointOfDeparture">PointOfDeparture</label>
+                            <input type="text" class="form-control" asp-for="PointOfDeparture">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="TourType">TourType</label>
+                            <input type="text" class="form-control" asp-for="TourType">
+                        </div>
+                        <div class="form-group col-6">
+
+                            <label class="font-weight-semibold" for="Price">Price</label>
+                            <input type="text" class="form-control" asp-for="Price">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="CategoryTourId">Danh mục:</label>
+                            <select class="custom-select" id="CategoryTourId" name="CategoryTourId" asp-for="CategoryTourId" asp-items="@ViewBag.CategoryTourList" style="min-width: 200px;">
+                                <option value="">Chọn danh mục</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="CategoryTourName">Category Tour Name</label>
+                            <input type="text" class="form-control" asp-for="CategoryTourName" id="CategoryTourName" readonly>
+                        </div>
+
+
+                    @section Scripts {
+                            <script>
+                                 $(document).ready(function () {
+                                     // Lấy danh sách các danh mục
+                                     var categories = @Html.Raw(Json.Serialize(ViewBag.CategoryTourList));
+
+                                     // Gán sự kiện cho dropdownlist khi chọn danh mục
+                                     $('#CategoryTourId').change(function () {
+                                         var categoryId = $(this).val();
+                                         var categoryName = '';
+
+                                         // Tìm tên danh mục tương ứng với danh mục được chọn
+                                         categories.forEach(function (category) {
+                                             if (category.value == categoryId) {
+                                                 categoryName = category.text;
+                                                 return false;
+                                             }
+                                         });
+
+                                         // Gán tên danh mục cho textbox
+                                         $('#CategoryTourName').val(categoryName);
+                                     });
+                                 });
+                            </script>
+                            <script>
+                                function previewImage(input) {
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+                                        reader.onload = function (e) {
+                                            $('#imagePreview').attr('src', e.target.result).show();
+                                        }
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+                            </script>
+         
+
+
+
+
+
+
+                    }
+
+
+
+                        <div class="form-group col-6">
+                            <label class="font-weight-semibold" for="tourStatus">Status</label>
+                            <select class="custom-select" asp-for="Status" style="min-width: 200px;">
+                                <option value="1">Còn Tour</option>
+                                <option value="0">Hết Tour</option>
+                            </select>
+                        </div>
+
+                        <!-- Code for displaying the status of a Tour object -->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="product-edit-description">
+                <div class="form-group">
+                    <label class="font-weight-semibold" for="productBrand">Ảnh đại diện</label>
+                    <input name="fImage" type="file" class="form-control-file" asp-for="Image" onchange="previewImage(this)" />
+                    <img id="imagePreview" src="#" alt="Ảnh đại diện" style="max-width: 200px; max-height: 200px; display: none;" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="5" asp-for="Description"></textarea>
+            </div>
+        </div>
+        </div>
+    </form>
+
+
+
+
+
+

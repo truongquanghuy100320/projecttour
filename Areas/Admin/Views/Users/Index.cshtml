@@ -1,0 +1,66 @@
+﻿@model IEnumerable<projecttour.Models.User>
+
+@{
+    ViewData["Title"] = "Quản lý quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+            <span class="breadcrumb-item active">Danh sách quyền truy cập</span>
+        </nav>
+    </div>
+</div>
+
+<div class="row m-b-30">
+    <div class="col-lg-8">
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="Users" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span>Thêm mới</span></a>
+    </div>
+    <div class="col-lg-4 ">
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Password</th>
+                <th scope="col">Full_Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone_Number</th>
+                <th scope="col">Role</th>
+                <th scope="col">Desciption</th>
+                <th scope="col">Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+
+                    <tr>
+                        <th scope="row">@item.UserId</th>
+                        <td>@item.Username</td>
+                        <td>@item.Password</td>
+                        <td>@item.FullName</td>
+                        <td>@item.Email</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Role</td>
+                        <td>@item.Desciption</td>
+                        <td>@item.Gender</td>
+                        <td>
+                            <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="Users" asp-action="Details" asp-route-id="@item.UserId">View</a>
+                            <a class="btn btn-secondary btn-tone m-r-5" asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@item.UserId">Edit</a>
+                            <a class="btn btn-success btn-tone m-r-5" asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

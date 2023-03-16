@@ -1,0 +1,57 @@
+﻿@model List<Tour>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.TourId
+            </td>
+            <td>
+                @item.CategoryTourId
+            </td>
+            <td>
+                <div class="d-flex align-items-center">
+
+                    <h6 class="m-b-0 m-l-10">@item.Title</h6>
+                </div>
+            </td>
+            <td>@item.Duration</td>
+            <td>@item.DepartureDate</td>
+            <td>@item.Tranfer</td>
+            <td>@item.Hotel</td>
+            <td>@item.EmptySeat</td>
+            <td>@item.PointOfDeparture</td>
+            <td>@item.TourType</td>
+            <td>@string.Format("{0:#,##0} VND", item.Price)</td>
+            <td>@item.Description</td>
+            <td><img src="~/images/tours/@item.Image" alt="Tour Image" width="100"></td>
+            <td>@item.CategoryTourName</td>
+            <td>
+                @if (item.Status.HasValue && item.Status.Value > 0)
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>Còn hàng</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>Hết hàng</div>
+                    </div>
+                }
+            </td>
+
+
+            <td>
+                <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="Tours" asp-action="Details" asp-route-id="@item.TourId">Chi tiết</a>
+                <a class="btn btn-secondary btn-tone m-r-5" asp-area="Admin" asp-controller="Tours" asp-action="Edit" asp-route-id="@item.TourId">Sửa</a>
+                <a class="btn btn-success btn-tone m-r-5" asp-area="Admin" asp-controller="Tours" asp-action="Delete" asp-route-id="@item.TourId">Xóa</a>
+            </td>
+        </tr>
+
+
+    }
+}

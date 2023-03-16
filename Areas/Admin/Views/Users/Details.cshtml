@@ -1,0 +1,61 @@
+﻿@model projecttour.Models.User
+
+@{
+    ViewData["Title"] = "Quản lý quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-controller="Users" asp-action="Index">Danh sách quyền truy cập</a>
+            <span class="breadcrumb-item active">Thông tin quyền truy cập</span>
+        </nav>
+    </div>
+</div>
+
+<div class="card-body">
+    <h4 class="card-title">Thông tin quyền truy cập</h4>
+    <div class="table-responsive">
+        <table class="product-info-table m-t-20">
+            <tbody>
+                <tr>
+                    <td>ID:</td>
+                    <td class="text-dark font-weight-semibold">@Model.UserId</td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td>@Model.Username</td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>@Model.Desciption</td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td>@Model.Password</td>
+                </tr>
+                                <tr>
+                    <td>FullName</td>
+                    <td>@Model.FullName</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td>@Model.Role</td>
+                </tr>
+                 <tr>
+                    <td>PhoneNumber</td>
+                    <td>@Model.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>@Model.Gender</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
